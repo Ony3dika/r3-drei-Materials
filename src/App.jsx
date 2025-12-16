@@ -111,13 +111,15 @@ function App() {
       <Canvas
         className='cursor-grab'
         camera={{
-          position: [0, 2, 4],
+          position: [0, 2, 5],
           fov: 90,
         }}
       >
         <OrbitControls
           maxPolarAngle={Math.PI / 1.8}
           minPolarAngle={Math.PI / 1.8}
+          maxDistance={8}
+          minDistance={4}
           enablePan={false}
         />
         <pointLight position={[4, 10, 5]} />
