@@ -13,7 +13,7 @@ import { useState } from "react";
 const Orbs = [
   {
     index: 0,
-    name: "Sphere",
+    name: "Orbital",
     geometry: <sphereGeometry args={[2, 64, 32]} />,
     material: (
       <MeshWobbleMaterial
@@ -30,8 +30,8 @@ const Orbs = [
   },
   {
     index: 1,
-    name: "Anima",
-    geometry: <torusKnotGeometry args={[1, 0.7, 500, 500]} />,
+    name: "Flux",
+    geometry: <torusKnotGeometry args={[1, 0.7, 500, 200]} />,
     material: (
       <MeshWobbleMaterial
         factor={32}
@@ -44,11 +44,11 @@ const Orbs = [
       />
     ),
     backgroundColor: "#93c5ca",
-    // backdropColor: "#434e4f",
+    backdropColor: "#434e4f",
   },
   {
     index: 2,
-    name: "Droplet",
+    name: "Aqua",
     geometry: <icosahedronGeometry args={[2, 20]} />,
     material: (
       <MeshWobbleMaterial
@@ -67,8 +67,8 @@ const Orbs = [
   },
   {
     index: 3,
-    name: "Tetra",
-    geometry: <icosahedronGeometry args={[2, 60]} />,
+    name: "Amethyst",
+    geometry: <icosahedronGeometry args={[2, 40]} />,
     material: (
       <MeshDistortMaterial
         distort={0.4}
@@ -83,17 +83,92 @@ const Orbs = [
     backgroundColor: "#7600f0",
     backdropColor: "#1b0037",
   },
+  {
+    index: 4,
+    name: "Chrome",
+    geometry: <sphereGeometry args={[2, 4, 500, 500]} />,
+    material: (
+      <MeshWobbleMaterial
+        factor={3}
+        speed={0.4}
+        roughness={0}
+        metalness={30}
+        anisotropy={1}
+        clearcoat={1}
+        clearcoatRoughness={0}
+        color='#d1d5db'
+      />
+    ),
+    backgroundColor: "#68768a",
+    backdropColor: "#1f2933",
+  },
+  {
+    index: 5,
+    name: "Prism",
+    geometry: <dodecahedronGeometry args={[2, 0]} />,
+    material: (
+      <MeshDistortMaterial
+        distort={0.15}
+        speed={0.8}
+        roughness={0.1}
+        metalness={0.01}
+        transmission={1}
+        anisotropy={1}
+        clearcoat={1}
+        transparent
+        thickness={2}
+        ior={1.8}
+        color='#ffffff'
+      />
+    ),
+    backgroundColor: "#626262",
+    backdropColor: "#ffffff",
+  },
+  {
+    index: 6,
+    name: "Vanta",
+    geometry: <octahedronGeometry args={[2, 0]} />,
+    material: (
+      <MeshWobbleMaterial
+        factor={4}
+        speed={0.15}
+        roughness={1}
+        metalness={10}
+        clearcoat={1}
+        clearcoatRoughness={0}
+        color='#2dd4bf'
+      />
+    ),
+    backgroundColor: "#042a2a",
+    backdropColor: "#0b7676",
+  },
+  {
+    index: 7,
+    name: "Thrum",
+    geometry: <capsuleGeometry args={[1, 2, 200, 100]} />,
+    material: (
+      <MeshWobbleMaterial
+        factor={30}
+        speed={0.1}
+        roughness={0}
+        metalness={6}
+        anisotropy={0.1}
+        clearcoatRoughness={0}
+        color={"#ffd199"}
+      />
+    ),
+    backgroundColor: "#841a34",
+    backdropColor: "#380b16",
+  },
 ];
 
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const orbital = Orbs[currentIndex];
-  const [bgColor, setBgColor] = useState(orbital.backgroundColor);
 
   const handleNext = () => {
     setCurrentIndex((prev) => {
       const nextIndex = (prev + 1) % Orbs.length;
-      setBgColor(Orbs[nextIndex].backgroundColor);
       return nextIndex;
     });
   };
@@ -101,7 +176,6 @@ function App() {
   const handlePrev = () => {
     setCurrentIndex((prev) => {
       const nextIndex = (prev - 1 + Orbs.length) % Orbs.length;
-      setBgColor(Orbs[nextIndex].backgroundColor);
       return nextIndex;
     });
   };
@@ -130,7 +204,7 @@ function App() {
             <sphereGeometry args={[1, 64, 64]} />
             <LayerMaterial side={THREE.BackSide}>
               <Gradient
-                colorA={bgColor}
+                colorA={orbital.backgroundColor}
                 colorB={orbital.backdropColor ? orbital.backdropColor : "white"}
                 start={0}
                 end={-1}
@@ -156,13 +230,16 @@ function App() {
 
       <div className='absolute top-0 left-0 w-screen h-screen pointer-events-none flex justify-between items-center lg:px-10 px-2'>
         <p className='absolute lg:top-10 top-5 left-5 lg:text-3xl text-xl'>
-          r3-drei materials
+          r3-drei 
+        </p>
+        <p className='absolute lg:bottom-10 bottom-5 left-5 lg:text-lg text-sm'>
+          Explore different materials on react-three/drei
         </p>
         <p className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 xl:text-6xl text-2xl pointer-events-none font-semibold'>
           {orbital.name}
         </p>
         <button
-          className='pointer-events-auto bg-[#ffffff1a] backdrop-blur-xl border border-[#ffffff33] rounded-full lg:w-14 w-10 lg:h-14 h-10 flex justify-center items-center cursor-pointer transition-all duration-150 ease-in-out text-white hover:scale-105 hover:bg-[#ffffff33] hover:border-[#ffffff66]'
+          className='pointer-events-auto bg-[#ffffff1a] backdrop-blur-xl border border-[#ffffff33] rounded-full lg:w-14 w-10 lg:h-14 h-10 flex justify-center items-center cursor-pointer transition-all duration-150 ease-in-out text-white hover:scale-110 hover:bg-[#ffffff33] hover:border-[#ffffff66]'
           onClick={handlePrev}
         >
           <svg
@@ -180,7 +257,7 @@ function App() {
           </svg>
         </button>
         <button
-          className='pointer-events-auto bg-[#ffffff1a] backdrop-blur-xl border border-[#ffffff33] rounded-full lg:w-14 w-10 lg:h-14 h-10 flex justify-center items-center cursor-pointer transition-all duration-150 ease-in-out text-white hover:scale-105 hover:bg-[#ffffff33] hover:border-[#ffffff66]'
+          className='pointer-events-auto bg-[#ffffff1a] backdrop-blur-xl border border-[#ffffff33] rounded-full lg:w-14 w-10 lg:h-14 h-10 flex justify-center items-center cursor-pointer transition-all duration-150 ease-in-out text-white hover:scale-110 hover:bg-[#ffffff33] hover:border-[#ffffff66]'
           onClick={handleNext}
         >
           <svg
