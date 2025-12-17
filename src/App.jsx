@@ -213,7 +213,7 @@ function App() {
             </LayerMaterial>
           </mesh>
         </Environment>
-        <axesHelper />
+        {/* <axesHelper /> */}
 
         <Float
           key={orbital.index}
